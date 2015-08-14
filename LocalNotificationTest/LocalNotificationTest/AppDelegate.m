@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +18,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    _vc = (ViewController *)self.window.rootViewController;
+    NSLog(@"%@",_vc);
+    
     return YES;
+}
+
+-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    if (notificationSettings.types!=UIUserNotificationTypeNone) {
+        [_vc addLocalNotification];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -32,6 +42,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];//进入前台取消应用消息图标
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
